@@ -15,6 +15,8 @@
 		}
     `);
 
+	console.log('[Clutterfree] Content script loaded.');
+
 	const $ = selector => document.querySelector(selector);
 	const $$ = a => Array.from(document.querySelectorAll(a));
 
@@ -32,7 +34,6 @@
 
 			async init() {
 				if (this.running) {
-					console.log("already running")
 					return;
 				}
 
@@ -41,8 +42,6 @@
 				this.addSignature();
 				this.createBanner();
 				await this.handleNotifications();
-
-				console.log("stopped running");
 				return this.stopRunning();
 			},
 
@@ -182,9 +181,6 @@
 
 				for (const notification of notifications) {
 					const metaData = metaDataCollection[notifications.indexOf(notification)];
-					if (!metaData.userId) {
-						console.log('ayoo', metaData);
-					}
 
 					let lastGroup;
 
@@ -241,7 +237,7 @@
 					}
 				}
 
-				await new Promise(resolve => setTimeout(resolve, 100));
+				// await new Promise(resolve => setTimeout(resolve, 100));
 			},
 
 			toggleMinorNotifications(userId, parentActivityId) {
