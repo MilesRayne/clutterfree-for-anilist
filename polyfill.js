@@ -51,3 +51,13 @@ function inject(func) {
 	target.appendChild(script);
 	target.removeChild(script); // Removing since once it executes it is no longer needed
 }
+
+var originalConsoleLog = console.log;
+console.log = function() {
+    args = [];
+    args.push('[Clutterfree for Anilist] ');
+    for (var i = 0; i < arguments.length; i++) {
+        args.push(arguments[i]);
+    }
+    originalConsoleLog.apply(console, args);
+}

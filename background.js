@@ -1,13 +1,3 @@
-var originalConsoleLog = console.log;
-console.log = function() {
-    args = [];
-    args.push('[Rayne Plugin] ');
-    for (var i = 0; i < arguments.length; i++) {
-        args.push(arguments[i]);
-    }
-    originalConsoleLog.apply(console, args);
-}
-
 function listener(details) {
     let filter = browser.webRequest.filterResponseData(details.requestId);
     let decoder = new TextDecoder("utf-8");

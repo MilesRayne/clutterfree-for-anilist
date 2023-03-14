@@ -15,7 +15,7 @@
 		}
     `);
 
-	console.log('[Clutterfree] Content script loaded.');
+	console.log('Content script loaded.');
 
 	const $ = selector => document.querySelector(selector);
 	const $$ = a => Array.from(document.querySelectorAll(a));
