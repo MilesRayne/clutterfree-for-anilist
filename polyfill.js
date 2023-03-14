@@ -43,11 +43,12 @@ function GM_xmlhttpRequest(options) {
 	}
 }
 
-/* Extensions cannot access the document's window directly */
-function inject(func) {
-	const script = document.createElement('script');
-	script.appendChild(document.createTextNode(`(${func})();`));
-	const target = document.head || document.body || document.documentElement || document;
-	target.appendChild(script);
-	target.removeChild(script); // Removing since once it executes it is no longer needed
+var originalConsoleLog = console.log;
+console.log = function() {
+    args = [];
+    args.push('[Clutterfree] ');
+    for (var i = 0; i < arguments.length; i++) {
+        args.push(arguments[i]);
+    }
+    originalConsoleLog.apply(console, args);
 }

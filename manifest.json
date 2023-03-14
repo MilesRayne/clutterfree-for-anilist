@@ -4,29 +4,30 @@
 	"description": "Minimal extension to remove clutter from AniList notifications",
 	"version": "1.0.0",
 	"minimum_chrome_version": "60.0.3112",
-
 	"icons": {
 		"128": "icons/icon128.png"
 	},
-
 	"permissions": [
-        "webRequest",
-        "webRequestBlocking",
-		"webRequestFilterResponse"
+		"scripting"
 	],
+	"background": {
+		"service_worker": "background.js"
+	},
 	"host_permissions": [
-		"https://graphql.anilist.co/*",
-        "https://anilist.co/graphql"
+		"https://anilist.co/graphql",
+		"https://anilist.co/*"
 	],
-
-    "background": {
-        "scripts": ["background.js"]
-    },
-
 	"content_scripts": [
 		{
-			"matches": [ "https://anilist.co/*" ],
-			"js": [ "polyfill.js", "functionalities.js" ]
+			"matches": [
+				"https://anilist.co/*"
+			],
+			"js": [
+				"polyfill.js",
+				"interceptor.js",
+				"functionalities.js"
+			],
+			"run_at": "document_start"
 		}
 	]
 }
