@@ -1,0 +1,84 @@
+.cf-hidden {
+	display: none !important;
+}
+
+.cf-group-card {
+	border-left: 6px solid rgb(var(--color-blue));
+	padding-left: 6px;
+	cursor: pointer;
+}
+
+.cf-group-card:hover {
+	/* highlight the background color a bit */
+	background-color: rgba(var(--color-foreground), 0.7);
+}
+
+.cf-minor-notification {
+	margin-left: 36px;
+	border-left: 4px solid rgb(var(--color-blue));
+	padding-left: 6px;
+}
+
+.cf-minor-notification .avatar {
+	max-height: 50px !important;
+	width: 50px !important;
+}
+
+.cf-minor-notification,
+.cf-minor-notification .details {
+	max-height: 50px !important;
+	min-height: 50px !important;
+}
+
+.cf-minor-notification:not(.cf-last-minor-notification) {
+	margin-bottom: 9px !important;
+}
+
+.cf-expand-button {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	z-index: 1;
+}
+
+.cf-group-card-expanded {
+	margin-bottom: 9px !important;
+}
+
+.cf-group-settings-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 10px;
+	background-color: rgba(var(--color-foreground), 0.8);
+	border-radius: 5px;
+	margin-bottom: 8px;
+}
+
+.cf-group-settings-button {
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 3px;
+	width: 32px;
+	height: 23px;
+	text-align: center;
+	line-height: 23px;
+	-webkit-user-select: none; /* Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
+}
+
+.cf-button-enabled {
+	background-color: rgb(var(--color-blue));
+}
+.cf-group-settings-button:hover {
+	color: #fff;
+}
+
+.cf-button-disabled {
+	color: rgb(var(--color-gray-700));
+	background-color: rgb(var(--color-gray-300));
+}
