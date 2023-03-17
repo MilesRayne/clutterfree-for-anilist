@@ -1,6 +1,5 @@
 # Clutterfree for Anilist
-[![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/MilesRayne/clutterfree-for-anilist/main/LICENSE)
-[![Chat / Support](https://img.shields.io/badge/Support-Discord-7289DA.svg?style=flat-square)](https://discord.gg/M2kryqC3C3)
+[![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/MilesRayne/clutterfree-for-anilist/main/LICENSE)[![Chat / Support](https://img.shields.io/badge/Support-Discord-7289DA.svg?style=flat-square)](https://discord.gg/M2kryqC3C3)
 
 ## Features
 

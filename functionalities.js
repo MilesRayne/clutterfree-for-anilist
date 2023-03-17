@@ -8,6 +8,8 @@
 		}
 		.minor-notification {
 			margin-left: 36px !important;
+			border-left: 3px solid rgb(var(--color-blue)) !important;
+			padding-left: 6px !important;
 		}
 
 		.reset-btn {
@@ -25,9 +27,7 @@
 			running: false,
 
 			shouldGroup: true,
-
-			currentData: null,
-
+			
 			stopRunning() {
 				this.running = false;
 			},
@@ -143,7 +143,6 @@
 						}
 					}
 				}
-
 				return metaDataCollection;
 			},
 
@@ -156,16 +155,35 @@
 				for (const minorNotification of minorNotifications) {
 					minorNotification.classList.remove('minor-notification');
 				}
-				const majorNotifications = $$('.major-notification');
+				const majorNotifications = $$('[class*="major-notification-"]');
 				for (const majorNotification of majorNotifications) {
-					majorNotification.classList.remove('major-notification');
+					//find name of class and remove it
+					const className = majorNotification.className.match(/major-notification-\d+-\d+/)[0];
+					majorNotification.classList.remove(className);
 					const context = majorNotification.querySelector('.context');
 					context.innerText = "liked your activity."
+					majorNotification.style.borderLeft = 'none';
+					majorNotification.style.paddingLeft = '0px';
+					const activityId = className.split('-')[3];
+					//remove link to activity from first notification a element
+					const majorNotificationLink = majorNotification.querySelector('.link');
+					majorNotificationLink.removeAttribute('href');
+					majorNotificationLink.setAttribute('href', `https://anilist.co/activity/${activityId}`);
+
+					let clone = majorNotification.cloneNode(true);
+					majorNotification.replaceWith(clone);
+
 				}
 
 				//get expand buttons by regex of expand-hidden-button-*
-				const expandButtons = $$('[class^="expand-hidden-button-"]');
-				console.log(expandButtons);
+				const expandButtons = $$('[class*="expand-hidden-button-"]');
+
+				//delete all duplicate notifications
+				const duplicateNotifications = $$('[class*="duplicate-notification-"]');
+				for (const duplicateNotification of duplicateNotifications) {
+					duplicateNotification.remove();
+
+				}
 
 				//delete all expand buttons
 				for (const expandButton of expandButtons) {
@@ -187,8 +205,10 @@
 					if (groups && groups.length > 0) {
 						lastGroup = groups[groups.length - 1];
 					}
-
 					if (lastGroup && lastGroup.userId == metaData?.userId && lastGroup.activityType == metaData?.activityType) {
+						//line below prevents duplicate notifications from being added to the same group
+						const alreadyAdded = (lastGroup.notifications.find(el => { return el.metaData.activityId == metaData.activityId && el.metaData.userId == metaData.userId }));
+						if (alreadyAdded) continue;
 						lastGroup.notifications.push({ element: notification, metaData });
 					} else {
 						const group = { userId: metaData.userId, parentActivityId: metaData.activityId, activityType: metaData.activityType, notifications: [] };
@@ -198,6 +218,7 @@
 				}
 				for (const group of groups) {
 					if (group.activityType == 'ACTIVITY_LIKE' && group.notifications.length > 1) {
+
 						// sort notifications by createdAt latest to earliest
 						group.notifications.sort((a, b) => {
 							return b.metaData.createdAt - a.metaData.createdAt;
@@ -206,9 +227,45 @@
 						const firstNotification = group.notifications[0];
 						const firstNotificationElement = firstNotification.element;
 
+						//check if duplicate notification already exists
+						let duplicateNotificationExists = notificationContainer.querySelector(`.duplicate-notification-${group.userId}-${group.parentActivityId}`);
+
+						//create a copy of the first notification and insert it after the first notification
+						if (!duplicateNotificationExists) {
+							const duplicateNotification = firstNotificationElement.cloneNode(true);
+							duplicateNotification.classList.add(`duplicate-notification-${group.userId}-${group.parentActivityId}`);
+							duplicateNotification.classList.add(`hidden-id-${group.userId}-${group.parentActivityId}`);
+							duplicateNotification.classList.add('hidden-notification');
+							duplicateNotification.classList.add('minor-notification');
+							firstNotificationElement.insertAdjacentElement('afterend', duplicateNotification);
+						}
+
 						const firstNotificationContext = firstNotificationElement.querySelector('.context');
 						firstNotificationContext.innerText = `liked ${group.notifications.length} of your activities.`;
-						firstNotificationElement.classList.add('major-notification');
+						firstNotificationElement.classList.add(`major-notification-${group.userId}-${group.parentActivityId}`);
+
+						//remove link to activity from first notification a element
+						const firstNotificationLink = firstNotificationElement.querySelector('.link');
+						firstNotificationLink.removeAttribute('href');
+						firstNotificationLink.setAttribute('href', 'javascript:void(0)');
+
+						//change css of first notification
+						//add border left 5px solid blue
+						firstNotificationElement.style.borderLeft = '6px solid rgb(var(--color-blue))';
+						firstNotificationElement.style.paddingLeft = '6px';
+
+						//remove existing click event listener
+						// firstNotificationLink.outerHTML = firstNotificationLink.outerHTML;
+						let clone = firstNotificationLink.cloneNode(true);
+						firstNotificationLink.replaceWith(clone);
+
+						clone.addEventListener('click', function () {
+							anilist.notifications.toggleMinorNotifications(group.userId, group.parentActivityId);
+						});
+
+
+
+
 
 						//check if button already exists
 						let button = firstNotificationElement.querySelector(`.expand-hidden-button-${group.userId}-${group.parentActivityId}`);
