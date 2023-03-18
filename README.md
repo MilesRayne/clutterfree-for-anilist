@@ -9,9 +9,9 @@
 
 ## Installation
 
-[**Firefox Add-ons**](https://addons.mozilla.org/en-US/firefox/addon/clutterfree-for-anilist/)
+[**Chrome Extension**](https://chrome.google.com/webstore/detail/clutterfree-for-anilist/hfgmcmijjnccacoefjdndepfkbaejllb)
 
-**Chrome version pending review!**
+[**Firefox Add-on**](https://addons.mozilla.org/en-US/firefox/addon/clutterfree-for-anilist/)
 
 ## Planned changes and features
 
