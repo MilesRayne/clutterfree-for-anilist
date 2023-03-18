@@ -11,6 +11,9 @@
 
 [**Firefox Add-ons**](https://addons.mozilla.org/en-US/firefox/addon/clutterfree-for-anilist/)
 
-## Planned Changes
+**Chrome version pending review!**
 
-- Further decluttering of other AniList tabs.
+## Planned changes and features
+
+- Compact activity feed option.
+- Additional decluttering of other AniList tabs and pages.
