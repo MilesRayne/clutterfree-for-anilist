@@ -1,9 +1,15 @@
 {
-	"manifest_version": 3,
+	"manifest_version": 2,
 	"name": "Clutterfree for Anilist",
 	"description": "Minimal extension to remove clutter from AniList notifications",
 	"version": "1.1.0",
+	"minimum_chrome_version": "60.0.3112",
 	"author": "Miles Rayne",
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "{45748bd3-6236-480c-a6eb-26757edd9266}"
+		}
+	},
 	"icons": {
 		"128": "icons/icon128.png"
 	},
@@ -14,10 +20,5 @@
 			"js": ["polyfill.js", "clutterfree.js"]
 		}
 	],
-	"web_accessible_resources": [
-		{
-			"matches": ["https://anilist.co/*"],
-			"resources": ["css/clutterfree.css"]
-		}
-	]
+	"web_accessible_resources": ["css/clutterfree.css"]
 }
