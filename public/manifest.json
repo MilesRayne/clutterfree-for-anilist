@@ -2,7 +2,7 @@
 	"manifest_version": 3,
 	"name": "Clutterfree for Anilist",
 	"description": "Minimal extension to remove clutter from AniList notifications",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"author": "Miles Rayne",
 	"icons": {
 		"128": "icons/icon128.png"
