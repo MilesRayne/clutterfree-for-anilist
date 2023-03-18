@@ -4,6 +4,7 @@ import { NotificationType } from "../enums/notification-type.enum";
 import { NotificationData } from "../models/notification-data.model";
 import { NotificationGroup } from "../models/notification-group.model";
 import { AbstractFunctionality } from "./abstract-functionality";
+import polyfill from "../polyfill";
 
 export class Notifications extends AbstractFunctionality {
 	async run(): Promise<void> {
@@ -229,6 +230,12 @@ export class Notifications extends AbstractFunctionality {
 				const element = notification.element;
 				element.classList.remove("cf-last-minor-notification");
 
+				const hideGroupButton = element.querySelector(".cf-hide-group-button");
+
+				if (hideGroupButton) {
+					hideGroupButton.remove();
+				}
+
 				if (!element.classList.contains("cf-minor-notification")) {
 					element.classList.add("cf-minor-notification");
 				}
@@ -239,6 +246,18 @@ export class Notifications extends AbstractFunctionality {
 
 				if (i == notifications.length - 1) {
 					element.classList.add("cf-last-minor-notification");
+
+					//add button to hide group
+					const hideGroupButton = polyfill.createElement("a", {
+						class: "cf-hide-group-button",
+						"cf-group-id": group.groupId,
+					});
+					hideGroupButton.textContent = "^";
+					hideGroupButton.addEventListener("click", (e) => {
+						e.stopPropagation();
+						this.hideGroup(group.groupId);
+					});
+					element.append(hideGroupButton);
 				}
 			}
 		}
@@ -257,6 +276,26 @@ export class Notifications extends AbstractFunctionality {
 			notification.classList.remove("cf-last-minor-notification");
 			notification.classList.remove("cf-hidden");
 		}
+		const hideGroupButtons = this.$$(".cf-hide-group-button");
+		for (const button of hideGroupButtons) {
+			button.remove();
+		}
+	}
+
+	hideGroup(groupId: string) {
+		const notifications = this.$$(
+			".notification[cf-group-id='" + groupId + "']"
+		);
+		const groupCard = this.$(
+			".notification[cf-group-id='" + groupId + "'].cf-group-card"
+		);
+
+		groupCard!.setAttribute("cf-group-hidden", "true");
+		notifications.forEach((notification) => {
+			notification.classList.add("cf-hidden");
+		});
+		groupCard!.classList.remove("cf-hidden");
+		groupCard!.classList.remove("cf-group-card-expanded");
 	}
 
 	toggleGroupVisibility(id: string) {

@@ -17,6 +17,7 @@
 	margin-left: 36px;
 	border-left: 4px solid rgb(var(--color-blue));
 	padding-left: 6px;
+	overflow: visible !important;
 }
 
 .cf-minor-notification .avatar {
@@ -81,4 +82,27 @@
 .cf-button-disabled {
 	color: rgb(var(--color-gray-700));
 	background-color: rgb(var(--color-gray-300));
+}
+
+.cf-hide-group-button {
+	background-color: rgb(var(--color-blue));
+	color: white;
+	padding: 3px 0px;
+	position: absolute;
+	left: -28px;
+	bottom: 16px;
+	height: 18px;
+	width: 18px;
+	font-size: 1.6rem;
+	line-height: 18px;
+	text-align: center;
+	font-weight: bold;
+	cursor: pointer;
+	z-index: 1;
+	border-radius: 4px;
+}
+
+.cf-hide-group-button:hover {
+	background-color: rgba(var(--color-blue), 0.8);
+	color: white;
 }
